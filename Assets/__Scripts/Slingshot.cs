@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Slingshot : MonoBehaviour
 {
     //fields set in the Unity Inspector pane
@@ -74,6 +75,7 @@ public class Slingshot : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             //The mouse has been released
+            GetComponent<AudioSource>().Play();
             aimingMode = false;
             Rigidbody projRB = projectile.GetComponent<Rigidbody>();
             projRB.isKinematic = false;

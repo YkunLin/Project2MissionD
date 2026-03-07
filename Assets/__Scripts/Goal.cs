@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
+[RequireComponent(typeof(AudioSource))]
 public class Goal : MonoBehaviour
 {
     //A static field accessible by code anywhere
@@ -17,6 +18,7 @@ public class Goal : MonoBehaviour
         {
             //If so, set goalMet to true
             Goal.goalMet = true;
+            GetComponent<AudioSource>().Play();
             //Also set the alpha of the color to higher opacity
             Material mat = GetComponent<Renderer>().material;
             Color c = mat.color;
