@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
 public class Projectile : MonoBehaviour
 {
+    private AudioSource audioSource;
+    private bool hasPlayed = false;
     const int LOOKBACK_COUNT = 10;
     static List<Projectile> PROJECTILES = new List<Projectile>();
 
@@ -23,6 +26,7 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rigid = GetComponent<Rigidbody>();
         awake = true;
         prevPos = new Vector3(1000,1000,0);
@@ -59,6 +63,14 @@ public class Projectile : MonoBehaviour
             awake = false;
             rigid.Sleep();
         }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if(hasPlayed) return;
+
+        audioSource.Play();
+        hasPlayed = true;
     }
 
     private void OnDestroy()
