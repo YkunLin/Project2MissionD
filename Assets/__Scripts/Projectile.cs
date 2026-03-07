@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class Projectile : MonoBehaviour
 {
+    public GameObject hitEffect;
     private AudioSource audioSource;
     private bool hasPlayed = false;
     const int LOOKBACK_COUNT = 10;
@@ -67,6 +68,7 @@ public class Projectile : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        Instantiate(hitEffect, transform.position, Quaternion.identity);
         if(hasPlayed) return;
 
         audioSource.Play();

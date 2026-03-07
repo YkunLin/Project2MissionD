@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644b7bd9a5484c745ab9254beb50d1f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitEffect: {fileID: 6812331521665081539, guid: 79ce1421228c6074ca25f34fc95b6e85, type: 3}
   _awake: 1
 --- !u!82 &5952042570533304854
 AudioSource:
