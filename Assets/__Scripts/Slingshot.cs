@@ -5,6 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class Slingshot : MonoBehaviour
 {
+    [SerializeField] private LineRenderer rubber;
+    [SerializeField] private Transform LeftArm;
+    [SerializeField] private Transform RightArm;
+    
     //fields set in the Unity Inspector pane
     [Header("Inscribed")]
     public GameObject projectilePrefab;
@@ -18,6 +22,10 @@ public class Slingshot : MonoBehaviour
     public GameObject projectile;
     public bool aimingMode;
 
+    void Start()
+    {   
+        rubber.enabled = false; //hide rubber
+    }
     void Awake()
     {
         Transform launchPointTrans = transform.Find("LaunchPoint");
@@ -41,6 +49,7 @@ public class Slingshot : MonoBehaviour
     {
         //The player has pressed the mouse button while over Slingshot
         aimingMode = true;
+        rubber.enabled = true;
         //Instantiate a Projectile
         projectile = Instantiate(projectilePrefab) as GameObject;
         //Start it at the launchPoint
@@ -71,12 +80,27 @@ public class Slingshot : MonoBehaviour
         //Move the projectile to this new position
         Vector3 projPos = launchPos + mouseDelta;
         projectile.transform.position = projPos;
+        
+        //set rubber position
+        Vector3 left = LeftArm.position;
+        Vector3 right = RightArm.position;
+        Vector3 mid = projPos;
+
+        //keep both ends of the rubber band at the same height
+        left.y = launchPos.y;
+        right.y = launchPos.y;
+        // update the line renderer positions
+        rubber.SetPosition(0, left);
+        rubber.SetPosition(1, mid);
+        rubber.SetPosition(2, right);
 
         if (Input.GetMouseButtonUp(0))
         {
             //The mouse has been released
             GetComponent<AudioSource>().Play();
             aimingMode = false;
+            rubber.enabled = false; //hide rubber
+
             Rigidbody projRB = projectile.GetComponent<Rigidbody>();
             projRB.isKinematic = false;
             projRB.collisionDetectionMode = CollisionDetectionMode.Continuous;
