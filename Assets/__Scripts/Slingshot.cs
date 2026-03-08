@@ -86,7 +86,7 @@ public class Slingshot : MonoBehaviour
         Vector3 right = RightArm.position;
         Vector3 mid = projPos;
 
-        //keep both ends of the rubber band at the same height
+        //keep both ends of the rubber band and the launch position at the same height
         left.y = launchPos.y;
         right.y = launchPos.y;
         // update the line renderer positions
